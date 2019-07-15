@@ -21,26 +21,40 @@ public class ParseJson
     		Object obj = parser.parse(new FileReader("plans.json"));
     		JSONObject jsonObject = (JSONObject) obj;
     		
-    		String pid = (String) jsonObject.get("planId");
-    		String pname = (String) jsonObject.get("planName");
-    		String price = (String) jsonObject.get("planPrice");
-    		String pdesc = (String) jsonObject.get("planDesc");
-    		String pstat = (String) jsonObject.get("planStatus");
-    		
+            JSONObject businessOp = (JSONObject) jsonObject.get("businessOutput");
+            
     		//Loop array
-    		JSONArray smsArray = (JSONArray) jsonObject.get("smsPlans");
-    		JSONArray dataArray = (JSONArray) jsonObject.get("dataPlans");
+    		JSONArray smsArray = (JSONArray) businessOp.get("smsPlans");
+    		JSONArray dataArray = (JSONArray) businessOp.get("dataPlans");
     		Iterator<String> it1 = smsArray.iterator();
-    		Iterator<String> it2 = dataArray.iterator();
+    		Iterator<String> it2 = dataArray.iterator();	
     		
-    		while(it1.hasNext()) {
-    			System.out.println("smsPlans : " + it1.next());
-    			System.out.println("planId : " + pid + "\nplanName : " + pname + "\nplanPrice : " + price + "\nplanDesc : " + pdesc + "\nplanStatus : " + pstat);
+    		String pid,pname,price,pdesc,pstat;
+    		int length = smsArray.size();
+    		int i=0;
+    		System.out.println("smsPlans : ");
+    		while(it1.hasNext() && i < length) {
+        		//String jsonStr =  it1.next();
+    			JSONObject jsonobject = (JSONObject) smsArray.get(i++);
+        		pid = (String) jsonobject.get("planId");
+        		pname = (String) jsonobject.get("planName");
+        		price = (String) jsonobject.get("planPrice");
+        		pdesc = (String) jsonobject.get("planDesc");
+        		pstat = (String) jsonobject.get("planStatus");	
+    			System.out.println("planId : " + pid + "\nplanName : " + pname + "\nplanPrice : " + price + "\nplanDesc : " + pdesc + "\nplanStatus : " + pstat + "\n");
     		}
     		
-    		while(it2.hasNext()) {
-    			System.out.println("dataPlans : " + it2.next());
-    			System.out.println("planId : " + pid + "\nplanName : " + pname + "\nplanPrice : " + price + "\nplanDesc : " + pdesc + "\nplanStatus : " + pstat);
+    		length = dataArray.size();
+    		i = 0;
+			System.out.println("dataPlans : ");
+    		while(it2.hasNext() && i < length) {
+    			JSONObject jsonobject = (JSONObject) dataArray.get(i++);
+        		pid = (String) jsonobject.get("planId");
+        		pname = (String) jsonobject.get("planName");
+        		price = (String) jsonobject.get("planPrice");
+        		pdesc = (String) jsonobject.get("planDesc");
+        		pstat = (String) jsonobject.get("planStatus");	
+    			System.out.println("planId : " + pid + "\nplanName : " + pname + "\nplanPrice : " + price + "\nplanDesc : " + pdesc + "\nplanStatus : " + pstat + "\n");
     		}
     	}	
     	
